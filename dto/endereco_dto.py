@@ -1,9 +1,11 @@
-class Cliente:
-    def __init__(self, id, id_provedor, nome, email, fone, status, endereco=None):
-        self.id = id
-        self.id_provedor = id_provedor
-        self.nome = nome
-        self.email = email
-        self.fone = fone
-        self.status = status
-        self.endereco = endereco
+from pydantic import BaseModel
+
+
+class EnderecoDTO(BaseModel):
+        id: int | None
+        bairro: str
+        cep: str
+        cidade: str
+        complemento: str | None
+        logradouro: str
+        numero: str | None

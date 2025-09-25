@@ -1,9 +1,7 @@
-from typing import Optional, TYPE_CHECKING
+from typing import Optional
 
+from sqlalchemy.orm import Mapped
 from sqlmodel import Relationship, SQLModel, Field
-
-if TYPE_CHECKING:
-    from model.endereco import Endereco
 
 
 class Usuario(SQLModel, table=True):
@@ -16,4 +14,18 @@ class Usuario(SQLModel, table=True):
     fone: str
     status: bool
 
-    endereco: Optional["Endereco"] = Relationship(back_populates="usuario")
+    endereco: Mapped["Endereco"] = Relationship(back_populates="usuario")
+
+class Endereco(SQLModel, table=True):
+    __tablename__ = "endereco"
+
+    id: int = Field(primary_key=True)
+    bairro: str
+    cep: str
+    cidade: str
+    complemento: Optional[str]
+    logradouro: str
+    numero: str
+
+    usuario_id: int | None = Field(foreign_key="usuario.id")
+    usuario: Mapped["Usuario"] = Relationship(back_populates="endereco")
