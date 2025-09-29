@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class CategoriaDTO(BaseModel):
+class MarcaDTO(BaseModel):
     id: int | None
     nome: str
     descricao: str | None

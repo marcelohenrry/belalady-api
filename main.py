@@ -1,11 +1,13 @@
-from fastapi import FastAPI
-from dotenv import load_dotenv
-import os
-from fastapi.middleware.cors import CORSMiddleware
 import logging
+import os
 
-from router.categoria_router import categoria_router
+from dotenv import load_dotenv
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from router.auth_router import auth_router
+from router.categoria_router import categoria_router
+from router.marca_router import marca_router
 from router.usuario_router import usuario_router
 
 load_dotenv()
@@ -27,8 +29,7 @@ app.add_middleware(CORSMiddleware,
 app.include_router(auth_router)
 app.include_router(usuario_router)
 app.include_router(categoria_router)
-
-
+app.include_router(marca_router)
 
 # Para rodar a aplicação
 # uvicorn main:app --reload
