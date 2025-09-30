@@ -76,3 +76,27 @@ def listar(session: Session):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Erro ao listar categorias: {}".format(e)
         )
+
+
+def listar_ativas(session: Session):
+    try:
+        categorias = session.exec(
+            select(Categoria).where(Categoria.status == True)
+        ).all()
+        categorias_dto = [
+            CategoriaDTO(
+                id=c.id,
+                nome=c.nome,
+                descricao=c.descricao,
+                status=c.status,
+                data_criacao=c.data_criacao.strftime("%Y-%m-%d") if c.data_criacao else None
+            )
+            for c in categorias
+        ]
+        return categorias_dto
+    except Exception as e:
+        print("Erro ao listar categorias ativas:", e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Erro ao listar categorias ativas: {e}"
+        )

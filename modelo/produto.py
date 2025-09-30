@@ -1,7 +1,11 @@
 from datetime import datetime
 from typing import Optional
 
-from sqlmodel import SQLModel, Field
+from sqlalchemy.orm import Mapped
+from sqlmodel import SQLModel, Field, Relationship
+
+from modelo.categoria import Categoria
+from modelo.marca import Marca
 
 
 class Produto(SQLModel, table=True):
@@ -16,4 +20,7 @@ class Produto(SQLModel, table=True):
     preco_base: float
 
     marca_id: int = Field(foreign_key="marca.id")
+    marca: Mapped["Marca"] = Relationship(back_populates="produto")
+
     categoria_id: int = Field(foreign_key="categoria.id")
+    categoria: Mapped["Categoria"] = Relationship(back_populates="produto")

@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from router.auth_router import auth_router
 from router.categoria_router import categoria_router
 from router.marca_router import marca_router
+from router.produto_router import produto_router
 from router.usuario_router import usuario_router
 
 load_dotenv()
@@ -30,6 +31,7 @@ app.include_router(auth_router)
 app.include_router(usuario_router)
 app.include_router(categoria_router)
 app.include_router(marca_router)
+app.include_router(produto_router)
 
 # Para rodar a aplicação
 # uvicorn main:app --reload

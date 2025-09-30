@@ -77,3 +77,25 @@ def listar(session: Session):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Erro ao listar marcas: {}".format(e)
         )
+
+
+def listar_ativas(session: Session):
+    try:
+        marcas = session.exec(select(Marca).where(Marca.status == True)).all()
+        marcas_dto = [
+            MarcaDTO(
+                id=m.id,
+                nome=m.nome,
+                descricao=m.descricao,
+                status=m.status,
+                data_criacao=m.data_criacao.strftime("%Y-%m-%d") if m.data_criacao else None
+            )
+            for m in marcas
+        ]
+        return marcas_dto
+    except Exception as e:
+        print("Erro ao listar marcas ativas:", e)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Erro ao listar marcas ativas: {}".format(e)
+        )
