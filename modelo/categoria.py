@@ -1,7 +1,8 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
-from sqlmodel import SQLModel, Field
+from sqlalchemy.orm import Mapped
+from sqlmodel import SQLModel, Field, Relationship
 
 
 class Categoria(SQLModel, table=True):
@@ -12,3 +13,5 @@ class Categoria(SQLModel, table=True):
     descricao: Optional[str]
     status: bool
     data_criacao: datetime
+
+    produto: Mapped[List["Produto"]] = Relationship(back_populates="categoria")

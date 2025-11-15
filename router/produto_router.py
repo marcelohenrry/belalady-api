@@ -3,10 +3,11 @@ from typing import List
 from fastapi import APIRouter, Depends, status
 from sqlmodel import Session
 
+from dto.mercadoria_dto import MercadoriaDTO
 from dto.produto_dto import ProdutoDTO
 from modelo.produto import Produto
 from resource.database import get_session
-from service.produto_service import salvar_produto, atualizar, listar, listar_ativos
+from service.produto_service import salvar_produto, atualizar, listar, listar_ativo
 
 produto_router = APIRouter(prefix="/produtos", tags=["produtos"])
 
@@ -28,13 +29,13 @@ async def atualizar_produto(
     return produto
 
 
-@produto_router.get("/", response_model=List[ProdutoDTO], status_code=status.HTTP_200_OK)
+@produto_router.get("/", response_model=List[MercadoriaDTO], status_code=status.HTTP_200_OK)
 async def listar_produtos(session: Session = Depends(get_session)):
     produtos = listar(session)
     return produtos
 
 
-@produto_router.get("/ativos", response_model=List[ProdutoDTO], status_code=status.HTTP_200_OK)
-async def listar_produtos_ativos(session: Session = Depends(get_session)):
-    produtos = listar_ativos(session)
+@produto_router.get("/status", response_model=List[MercadoriaDTO], status_code=status.HTTP_200_OK)
+async def status(situacao: bool, session: Session = Depends(get_session)):
+    produtos = listar_ativo(situacao, session)
     return produtos

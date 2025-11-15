@@ -14,7 +14,6 @@ class Produto(SQLModel, table=True):
     id: int = Field(primary_key=True)
     nome: str
     descricao: Optional[str]
-    preco: float
     status: bool
     data_criacao: datetime
     preco_base: float

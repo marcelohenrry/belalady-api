@@ -1,13 +1,10 @@
 from pydantic import BaseModel
 
-from dto.categoria_dto import CategoriaDTO
-from dto.marca_dto import MarcaDTO
-
 
 class ProdutoDTO(BaseModel):
     id: int | None
-    categoria: CategoriaDTO
-    marca: MarcaDTO
+    marca_id: int
+    categoria_id: int
     data_criacao: str | None
     descricao: str | None
     nome: str

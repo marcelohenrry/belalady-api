@@ -6,7 +6,7 @@ from sqlmodel import Session
 from dto.categoria_dto import CategoriaDTO
 from modelo.categoria import Categoria
 from resource.database import get_session
-from service.categoria_service import salvar_categoria, atualizar, listar
+from service.categoria_service import salvar_categoria, atualizar, listar, listar_ativa
 
 categoria_router = APIRouter(prefix="/categorias", tags=["categorias"])
 
@@ -31,4 +31,10 @@ async def atualizar_categoria(
 @categoria_router.get("/", response_model=List[CategoriaDTO], status_code=status.HTTP_200_OK)
 async def listar_categorias(session: Session = Depends(get_session)):
     categorias = listar(session)
+    return categorias
+
+
+@categoria_router.get("/status", response_model=List[CategoriaDTO], status_code=status.HTTP_200_OK)
+async def status(situacao: bool, session: Session = Depends(get_session)):
+    categorias = listar_ativa(situacao, session)
     return categorias

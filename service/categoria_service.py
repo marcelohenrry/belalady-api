@@ -78,10 +78,10 @@ def listar(session: Session):
         )
 
 
-def listar_ativas(session: Session):
+def listar_ativa(situacao: bool, session: Session):
     try:
         categorias = session.exec(
-            select(Categoria).where(Categoria.status == True)
+            select(Categoria).where(Categoria.status == situacao)
         ).all()
         categorias_dto = [
             CategoriaDTO(
@@ -89,7 +89,7 @@ def listar_ativas(session: Session):
                 nome=c.nome,
                 descricao=c.descricao,
                 status=c.status,
-                data_criacao=c.data_criacao.strftime("%Y-%m-%d") if c.data_criacao else None
+                data_criacao=c.data_criacao.strftime("%d-%m-%Y") if c.data_criacao else None
             )
             for c in categorias
         ]
@@ -98,5 +98,5 @@ def listar_ativas(session: Session):
         print("Erro ao listar categorias ativas:", e)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Erro ao listar categorias ativas: {e}"
+            detail="Erro ao listar categorias ativas: {}".format(e)
         )

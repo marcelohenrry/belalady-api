@@ -79,16 +79,16 @@ def listar(session: Session):
         )
 
 
-def listar_ativas(session: Session):
+def listar_ativa(situacao: bool, session: Session):
     try:
-        marcas = session.exec(select(Marca).where(Marca.status == True)).all()
+        marcas = session.exec(select(Marca).where(Marca.status == situacao)).all()
         marcas_dto = [
             MarcaDTO(
                 id=m.id,
                 nome=m.nome,
                 descricao=m.descricao,
                 status=m.status,
-                data_criacao=m.data_criacao.strftime("%Y-%m-%d") if m.data_criacao else None
+                data_criacao=m.data_criacao.strftime("%d-%m-%Y") if m.data_criacao else None
             )
             for m in marcas
         ]

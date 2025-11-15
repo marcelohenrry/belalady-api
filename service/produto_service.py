@@ -4,6 +4,9 @@ from fastapi import HTTPException
 from sqlmodel import Session, select
 from starlette import status
 
+from dto.categoria_dto import CategoriaDTO
+from dto.marca_dto import MarcaDTO
+from dto.mercadoria_dto import MercadoriaDTO
 from dto.produto_dto import ProdutoDTO
 from modelo.produto import Produto
 
@@ -19,8 +22,8 @@ def salvar_produto(produto_dto: ProdutoDTO, session: Session):
                                            "%Y-%m-%d") if produto_dto.data_criacao else datetime.now(),
             preco_base=produto_dto.preco_base,
             preco=produto_dto.preco_base,  # Ajuste conforme sua lógica de preço
-            categoria_id=produto_dto.categoria.id,
-            marca_id=produto_dto.marca.id
+            categoria_id=produto_dto.categoria_id,
+            marca_id=produto_dto.marca_id
         )
         session.add(produto)
         session.commit()
@@ -38,6 +41,7 @@ def salvar_produto(produto_dto: ProdutoDTO, session: Session):
 def atualizar(produto_id: int, produto_dto: ProdutoDTO, session: Session):
     try:
         produto = session.get(Produto, produto_id)
+        print("Atualizando produto {}:", produto_dto)
         if not produto:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
@@ -47,8 +51,8 @@ def atualizar(produto_id: int, produto_dto: ProdutoDTO, session: Session):
         produto.descricao = produto_dto.descricao
         produto.status = produto_dto.status
         produto.preco_base = produto_dto.preco_base
-        produto.categoria_id = produto_dto.categoria.id
-        produto.marca_id = produto_dto.marca.id
+        produto.categoria_id = produto_dto.categoria_id
+        produto.marca_id = produto_dto.marca_id
         session.add(produto)
         session.commit()
         session.refresh(produto)
@@ -67,15 +71,18 @@ def listar(session: Session):
         produtos = session.exec(select(Produto)).all()
         print("Produtos encontrados:", produtos)
         produtos_dto = [
-            ProdutoDTO(
+            MercadoriaDTO(
                 id=p.id,
                 nome=p.nome,
                 descricao=p.descricao,
                 status=p.status,
                 data_criacao=p.data_criacao.strftime("%Y-%m-%d") if p.data_criacao else None,
                 preco_base=p.preco_base,
-                categoria=p.categoria,
-                marca=p.marca
+                categoria=CategoriaDTO(id=p.categoria.id, nome=p.categoria.nome,
+                                       descricao=p.categoria.descricao, status=p.status,
+                                       data_criacao=p.data_criacao.strftime("%Y-%m-%d")) if p.categoria else None,
+                marca=MarcaDTO(id=p.marca.id, nome=p.marca.nome, status=p.marca.status, descricao=p.marca.descricao,
+                               data_criacao=p.marca.data_criacao.strftime("%Y-%m-%d")) if p.marca else None
             )
             for p in produtos
         ]
@@ -88,19 +95,22 @@ def listar(session: Session):
         )
 
 
-def listar_ativos(session: Session):
+def listar_ativo(situacao: bool, session: Session):
     try:
-        produtos = session.exec(select(Produto).where(Produto.status == True)).all()
+        produtos = session.exec(select(Produto).where(Produto.status == situacao)).all()
         produtos_dto = [
-            ProdutoDTO(
+            MercadoriaDTO(
                 id=p.id,
                 nome=p.nome,
                 descricao=p.descricao,
                 status=p.status,
                 data_criacao=p.data_criacao.strftime("%Y-%m-%d") if p.data_criacao else None,
                 preco_base=p.preco_base,
-                categoria=p.categoria,
-                marca=p.marca
+                categoria=CategoriaDTO(id=p.categoria.id, nome=p.categoria.nome,
+                                       descricao=p.categoria.descricao, status=p.status,
+                                       data_criacao=p.data_criacao.strftime("%Y-%m-%d")) if p.categoria else None,
+                marca=MarcaDTO(id=p.marca.id, nome=p.marca.nome, status=p.marca.status, descricao=p.marca.descricao,
+                               data_criacao=p.marca.data_criacao.strftime("%Y-%m-%d")) if p.marca else None
             )
             for p in produtos
         ]

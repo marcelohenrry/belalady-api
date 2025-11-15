@@ -3,7 +3,6 @@ from typing import Optional
 from sqlalchemy.orm import Mapped
 from sqlmodel import Relationship, SQLModel, Field
 
-
 class Usuario(SQLModel, table=True):
     __tablename__ = "usuario"
 
@@ -14,7 +13,8 @@ class Usuario(SQLModel, table=True):
     fone: str
     status: bool
 
-    endereco: Mapped["Endereco"] = Relationship(back_populates="usuario")
+    endereco: Mapped["Endereco"] = Relationship()
+    pedido: Mapped[list["Pedido"]] = Relationship(back_populates="usuario")
 
 class Endereco(SQLModel, table=True):
     __tablename__ = "endereco"

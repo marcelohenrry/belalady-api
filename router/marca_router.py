@@ -6,7 +6,7 @@ from sqlmodel import Session
 from dto.marca_dto import MarcaDTO
 from modelo.marca import Marca
 from resource.database import get_session
-from service.marca_service import salvar_marca, atualizar, listar
+from service.marca_service import salvar_marca, atualizar, listar, listar_ativa
 
 marca_router = APIRouter(prefix="/marcas", tags=["marcas"])
 
@@ -31,4 +31,10 @@ async def atualizar_marca(
 @marca_router.get("/", response_model=List[MarcaDTO], status_code=status.HTTP_200_OK)
 async def listar_marcas(session: Session = Depends(get_session)):
     marcas = listar(session)
+    return marcas
+
+
+@marca_router.get("/status", response_model=List[MarcaDTO], status_code=status.HTTP_200_OK)
+async def status(situacao: bool, session: Session = Depends(get_session)):
+    marcas = listar_ativa(situacao, session)
     return marcas

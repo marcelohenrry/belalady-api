@@ -7,7 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from router.auth_router import auth_router
 from router.categoria_router import categoria_router
+from router.estoque_router import estoque_router
 from router.marca_router import marca_router
+from router.pedido_router import pedido_router
 from router.produto_router import produto_router
 from router.usuario_router import usuario_router
 
@@ -32,9 +34,11 @@ app.include_router(usuario_router)
 app.include_router(categoria_router)
 app.include_router(marca_router)
 app.include_router(produto_router)
+app.include_router(estoque_router)
+app.include_router(pedido_router)
 
 # Para rodar a aplicação
-# uvicorn main:app --reload
+# uvicorn main:app --reload --debug
 
 # Para gerar o aquivo requirements.txt
 # pip freeze > requirements.txt
