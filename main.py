@@ -8,6 +8,7 @@ from router.categoria_router import categoria_router
 from router.auth_router import auth_router
 from router.usuario_router import usuario_router
 from router.marca_router import marca_router
+from router.estoque_router import estoque_router
 
 load_dotenv()
 
@@ -29,6 +30,7 @@ app.include_router(auth_router)
 app.include_router(usuario_router)
 app.include_router(categoria_router)
 app.include_router(marca_router)
+app.include_router(estoque_router)
 
 
 
