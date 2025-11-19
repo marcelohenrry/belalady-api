@@ -1,0 +1,697 @@
+{
+  "database_url": "postgresql://postgres:***@uvxtdw.easypanel.host:5430/belalady",
+  "extraction_date": "2025-11-19T18:10:46.055721",
+  "tables": [
+    {
+      "name": "categoria",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_criacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "categoria_nome_key",
+          "columns": [
+            "nome"
+          ],
+          "unique": true
+        }
+      ],
+      "constraints": [
+        {
+          "type": "unique",
+          "name": "categoria_nome_key",
+          "columns": [
+            "nome"
+          ]
+        }
+      ],
+      "primary_key_name": "categoria_pkey"
+    },
+    {
+      "name": "produto",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "preco_base",
+          "type": "NUMERIC(38, 2)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "categoria_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "marca_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_criacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "produto_categoria_id_fkey",
+          "constrained_columns": [
+            "categoria_id"
+          ],
+          "referred_table": "categoria",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        },
+        {
+          "name": "produto_marca_id_fkey",
+          "constrained_columns": [
+            "marca_id"
+          ],
+          "referred_table": "marca",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [],
+      "constraints": [],
+      "primary_key_name": "produto_pkey"
+    },
+    {
+      "name": "marca",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descricao",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_criacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "marca_nome_key",
+          "columns": [
+            "nome"
+          ],
+          "unique": true
+        }
+      ],
+      "constraints": [
+        {
+          "type": "unique",
+          "name": "marca_nome_key",
+          "columns": [
+            "nome"
+          ]
+        }
+      ],
+      "primary_key_name": "marca_pkey"
+    },
+    {
+      "name": "estoque",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "produto_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "quantidade",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_atualizacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "Última modificação"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "estoque_produto_id_fkey",
+          "constrained_columns": [
+            "produto_id"
+          ],
+          "referred_table": "produto",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "estoque_produto_id_key",
+          "columns": [
+            "produto_id"
+          ],
+          "unique": true
+        }
+      ],
+      "constraints": [
+        {
+          "type": "unique",
+          "name": "estoque_produto_id_key",
+          "columns": [
+            "produto_id"
+          ]
+        }
+      ],
+      "primary_key_name": "estoque_pkey"
+    },
+    {
+      "name": "usuario",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "id_provedor",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nome",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fone",
+          "type": "VARCHAR(15)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [],
+      "indexes": [],
+      "constraints": [],
+      "primary_key_name": "usuario_pkey"
+    },
+    {
+      "name": "endereco",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "usuario_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "logradouro",
+          "type": "VARCHAR(255)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "numero",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "complemento",
+          "type": "VARCHAR(100)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "bairro",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "cidade",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "cep",
+          "type": "VARCHAR(9)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "Formato XXXXX-XXX"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "endereco_usuario_id_fkey",
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuario",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [],
+      "constraints": [],
+      "primary_key_name": "endereco_pkey"
+    },
+    {
+      "name": "pedido",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "usuario_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "valor",
+          "type": "NUMERIC(38, 2)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "ENUM: pendente, pagamento_aprovado, processando, etc."
+        },
+        {
+          "name": "data_pedido",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_atualizacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "Última mudança de status"
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "pedido_usuario_id_fkey",
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_table": "usuario",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [],
+      "constraints": [],
+      "primary_key_name": "pedido_pkey"
+    },
+    {
+      "name": "pagamento",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "pedido_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "metodo_pagamento",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "ENUM: cartao_credito, cartao_debito, boleto, pix, transferencia"
+        },
+        {
+          "name": "valor_pago",
+          "type": "NUMERIC(38, 2)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "status",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": "ENUM: pendente, aprovado, rejeitado, etc."
+        },
+        {
+          "name": "data_pagamento",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "pagamento_pedido_id_fkey",
+          "constrained_columns": [
+            "pedido_id"
+          ],
+          "referred_table": "pedido",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [],
+      "constraints": [],
+      "primary_key_name": "pagamento_pkey"
+    },
+    {
+      "name": "item",
+      "columns": [
+        {
+          "name": "id",
+          "type": "BIGINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": true,
+          "comment": null
+        },
+        {
+          "name": "pedido_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "produto_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "quantidade",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "data_criacao",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_keys": [
+        "id"
+      ],
+      "foreign_keys": [
+        {
+          "name": "pedido_iten_pedido_id_fkey",
+          "constrained_columns": [
+            "pedido_id"
+          ],
+          "referred_table": "pedido",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        },
+        {
+          "name": "pedido_iten_produto_id_fkey",
+          "constrained_columns": [
+            "produto_id"
+          ],
+          "referred_table": "produto",
+          "referred_columns": [
+            "id"
+          ],
+          "on_delete": null,
+          "on_update": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "pedido_iten_pedido_id_produto_id_idx",
+          "columns": [
+            "pedido_id",
+            "produto_id"
+          ],
+          "unique": true
+        }
+      ],
+      "constraints": [],
+      "primary_key_name": "pedido_iten_pkey"
+    }
+  ]
+}
