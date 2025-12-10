@@ -19,7 +19,14 @@ pedido_router = APIRouter(prefix="/pedidos", tags=["pedidos"])
 @pedido_router.post("/", response_model=PedidoDTO, status_code=status.HTTP_201_CREATED)
 async def criar_pedido(pedido_dto: PedidoDTO, session: Session = Depends(get_session)):
     pedido = salvar_pedido(pedido_dto, session)
-    return PedidoDTO.model_validate(pedido.__dict__)
+    return PedidoDTO(
+        id=pedido.id,
+        data_atualizacao=pedido.data_atualizacao,
+        data_pedido=pedido.data_pedido,
+        status=pedido.status,
+        valor=pedido.valor,
+        usuario_id=pedido.usuario_id
+    )
 
 
 @pedido_router.put("/{pedido_id}", response_model=PedidoDTO, status_code=status.HTTP_200_OK)
@@ -29,7 +36,14 @@ async def atualizar_pedido_router(
         session: Session = Depends(get_session)
 ):
     pedido = atualizar_pedido(pedido_id, pedido_dto, session)
-    return PedidoDTO.model_validate(pedido.__dict__)
+    return PedidoDTO(
+        id=pedido.id,
+        data_atualizacao=pedido.data_atualizacao,
+        data_pedido=pedido.data_pedido,
+        status=pedido.status,
+        valor=pedido.valor,
+        usuario_id=pedido.usuario_id
+    )
 
 
 @pedido_router.get("/", response_model=List[CompraDTO], status_code=status.HTTP_200_OK)

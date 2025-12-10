@@ -14,8 +14,7 @@ def salvar_pedido(pedido_dto: PedidoDTO, session: Session):
     try:
         pedido = Pedido(
             data_atualizacao=datetime.now(),
-            data_pedido=datetime.strptime(pedido_dto.data_pedido,
-                                          "%Y-%m-%d") if pedido_dto.data_pedido else datetime.now(),
+            data_pedido=pedido_dto.data_pedido or datetime.now(),
             status=pedido_dto.status or "Pendente",
             valor=pedido_dto.valor,
             usuario_id=pedido_dto.usuario_id
