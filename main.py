@@ -22,7 +22,8 @@ logger = logging.getLogger(__name__)
 
 origins = [
     "http://localhost:3000",
-    "https://belalady-front-dqzi-git-verce-4dc358-gleysons-projects-e8508ef4.vercel.app"
+    "https://belalady-front-dqzi-git-verce-4dc358-gleysons-projects-e8508ef4.vercel.app",
+    "https://belalady-front-git-vercel-rea-8d8046-gleysons-projects-e8508ef4.vercel.app"
 ]
 app.add_middleware(CORSMiddleware,
                    allow_origins=origins,
