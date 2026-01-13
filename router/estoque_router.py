@@ -15,10 +15,18 @@ estoque_router = APIRouter(prefix="/estoques", tags=["estoques"])
 async def criar_estoque(estoque_dto: EstoqueDTO, session: Session = Depends(get_session)):
     return salvar_estoque(estoque_dto, session)
 
+@estoque_router.post("", response_model=Estoque, status_code=status.HTTP_201_CREATED)
+async def criar_estoque_sem_barra(estoque_dto: EstoqueDTO, session: Session = Depends(get_session)):
+    return salvar_estoque(estoque_dto, session)
+
 @estoque_router.put("/{estoque_id}", response_model=Estoque, status_code=status.HTTP_200_OK)
 async def atualizar_estoque_endpoint(estoque_id: int, estoque_dto: EstoqueDTO, session: Session = Depends(get_session)):
     return atualizar_estoque(estoque_id, estoque_dto, session)
 
 @estoque_router.get("/", response_model=List[ArmazenamentoDTO], status_code=status.HTTP_200_OK)
 async def listar_estoques(session: Session = Depends(get_session)):
+    return listar_estoque(session)
+
+@estoque_router.get("", response_model=List[ArmazenamentoDTO], status_code=status.HTTP_200_OK)
+async def listar_estoques_sem_barra(session: Session = Depends(get_session)):
     return listar_estoque(session)

@@ -17,6 +17,12 @@ async def criar_marca(marca_dto: MarcaDTO, session: Session = Depends(get_sessio
     return marca
 
 
+@marca_router.post("", response_model=Marca, status_code=status.HTTP_201_CREATED)
+async def criar_marca_sem_barra(marca_dto: MarcaDTO, session: Session = Depends(get_session)):
+    marca = salvar_marca(marca_dto, session)
+    return marca
+
+
 @marca_router.put("/{marca_id}", response_model=Marca, status_code=status.HTTP_200_OK)
 async def atualizar_marca(
         marca_id: int,
@@ -30,6 +36,12 @@ async def atualizar_marca(
 
 @marca_router.get("/", response_model=List[MarcaDTO], status_code=status.HTTP_200_OK)
 async def listar_marcas(session: Session = Depends(get_session)):
+    marcas = listar(session)
+    return marcas
+
+
+@marca_router.get("", response_model=List[MarcaDTO], status_code=status.HTTP_200_OK)
+async def listar_marcas_sem_barra(session: Session = Depends(get_session)):
     marcas = listar(session)
     return marcas
 

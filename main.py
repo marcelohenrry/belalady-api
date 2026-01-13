@@ -17,7 +17,7 @@ load_dotenv()
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-app = FastAPI()
+app = FastAPI(redirect_slashes=False)
 logger = logging.getLogger(__name__)
 
 origins = [

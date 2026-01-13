@@ -31,8 +31,34 @@ async def get_clientes(session: Session = Depends(get_session)):
     return clientes
 
 
+@usuario_router.get("", status_code=status.HTTP_200_OK)
+async def get_clientes_sem_barra(session: Session = Depends(get_session)):
+    usuarios = session.exec(select(Usuario)).all()
+    clientes = []
+    for usuario in usuarios:
+        endereco = EnderecoDTO(**usuario.endereco.model_dump())
+        print(f"Endereço encontrados: {endereco}")
+        cliente = ClienteDTO(
+            id=usuario.id,
+            id_provedor=usuario.id_provedor,
+            nome=usuario.nome,
+            email=usuario.email,
+            fone=usuario.fone,
+            status=usuario.status,
+            endereco=endereco
+        )
+        clientes.append(cliente)
+
+    return clientes
+
+
 @usuario_router.post("/", status_code=status.HTTP_201_CREATED)
 async def salvar_cliente(cliente_dto: ClienteDTO, session: Session = Depends(get_session)):
+    return salvar(cliente_dto, session)
+
+
+@usuario_router.post("", status_code=status.HTTP_201_CREATED)
+async def salvar_cliente_sem_barra(cliente_dto: ClienteDTO, session: Session = Depends(get_session)):
     return salvar(cliente_dto, session)
 
 @usuario_router.put("/{cliente_id}", status_code=status.HTTP_200_OK)

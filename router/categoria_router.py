@@ -17,6 +17,12 @@ async def criar_categoria(categoria_dto: CategoriaDTO, session: Session = Depend
     return categoria
 
 
+@categoria_router.post("", response_model=Categoria, status_code=status.HTTP_201_CREATED)
+async def criar_categoria_sem_barra(categoria_dto: CategoriaDTO, session: Session = Depends(get_session)):
+    categoria = salvar_categoria(categoria_dto, session)
+    return categoria
+
+
 @categoria_router.put("/{categoria_id}", response_model=Categoria, status_code=status.HTTP_200_OK)
 async def atualizar_categoria(
         categoria_id: int,
@@ -30,6 +36,12 @@ async def atualizar_categoria(
 
 @categoria_router.get("/", response_model=List[CategoriaDTO], status_code=status.HTTP_200_OK)
 async def listar_categorias(session: Session = Depends(get_session)):
+    categorias = listar(session)
+    return categorias
+
+
+@categoria_router.get("", response_model=List[CategoriaDTO], status_code=status.HTTP_200_OK)
+async def listar_categorias_sem_barra(session: Session = Depends(get_session)):
     categorias = listar(session)
     return categorias
 

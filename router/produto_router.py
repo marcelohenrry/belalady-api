@@ -18,6 +18,12 @@ async def criar_produto(produto_dto: ProdutoDTO, session: Session = Depends(get_
     return produto
 
 
+@produto_router.post("", response_model=Produto, status_code=status.HTTP_201_CREATED)
+async def criar_produto_sem_barra(produto_dto: ProdutoDTO, session: Session = Depends(get_session)):
+    produto = salvar_produto(produto_dto, session)
+    return produto
+
+
 @produto_router.put("/{produto_id}", response_model=Produto, status_code=status.HTTP_200_OK)
 async def atualizar_produto(
         produto_id: int,
@@ -31,6 +37,12 @@ async def atualizar_produto(
 
 @produto_router.get("/", response_model=List[MercadoriaDTO], status_code=status.HTTP_200_OK)
 async def listar_produtos(session: Session = Depends(get_session)):
+    produtos = listar(session)
+    return produtos
+
+
+@produto_router.get("", response_model=List[MercadoriaDTO], status_code=status.HTTP_200_OK)
+async def listar_produtos_sem_barra(session: Session = Depends(get_session)):
     produtos = listar(session)
     return produtos
 
